@@ -8,63 +8,96 @@
 // ======== OBJECTS DEFINITIONS ========
 // Define your objects here
 
-const dog = {
-    species: 'dog',
-    name: 'Ivan',
-    gender: 'male',
-    legs: 4,
-    hands: 0,
-    saying: 'Woof-woof!',
-    friends: ['Ira']
-};
+class Inhabitant {
+    constructor(species, name, gender, saying, friends) {
+        this.species = species;
+        this.name = name;
+        this.gender = gender;
+        this.saying = saying;
+        this.friends = friends;
+    }
 
-const cat = {
-    species: 'cat',
-    name: 'Pushok',
-    gender: 'male',
-    legs: 4,
-    hands: 0,
-    saying: 'Meeeow!',
-    friends: ['Sharik', 'Ponchik']
-};
+    sayHi() {
+        return( `${this.saying} I'm a ${this.species} with the name ${this.name}, which means I'm ${this.gender}. I want to say hi to <b>${this.friends}</b>, you are the best!`);
+    }
+}
 
-const catWoman = {
-    species: 'cat',
-    name: 'Murka',
-    gender: 'female',
-    legs: 4,
-    hands: 0,
-    saying: cat.saying,
-    friends: ['Pushok']
-};
+class Animal extends Inhabitant {
+    legs = 4;
+    constructor(name, gender, friends) {
+        super();
+        this.name = name;
+        this.gender = gender;
+        this.friends = friends;
+    }
 
-const woman = {
-    species: 'human',
-    name: 'Natali',
-    gender: 'female',
-    legs: 0,
-    hands: 2,
-    saying: 'Nice to meet you!',
-    friends: ['Madona']
-};
+    sayHi() {
+        return(
+            super.sayHi() + ` By the way, I have ${this.legs} legs.`
+        )
+    }
+}
 
-const man = {
-    species: 'human',
-    name: 'Andre',
-    gender: 'male',
-    legs: 0,
-    hands: 2,
-    saying: 'How you doing?',
-    friends: ['Vasya', 'Mitya']
-};
+
+class Dog extends Animal {
+    species = 'dog';
+    saying = 'Woof-woof';
+    constructor(name, gender, friends) {
+        super(name, gender, friends);
+    }
+}
+
+class Cat extends Animal {
+    species = 'cat';
+    saying = 'Meeeow!';
+    constructor(name, gender, friends) {
+        super(name, gender, friends);
+    }
+}
+
+class Human extends Inhabitant {
+    species = 'human';
+    hands = 2;
+    constructor(name, friends) {
+        super();
+        this.name = name;
+        this.friends = friends;
+    }
+
+    sayHi() {
+        return(
+            super.sayHi() + ` By the way, I have ${this.hands} hands.`
+        )
+    }
+}
+
+class Man extends Human {
+    gender = 'male';
+    saying = 'How you doing?';
+
+    constructor(name, friends) {
+        super(name, friends);
+    }
+}
+
+class Woman extends Human {
+    gender = 'female';
+    saying = 'Nice to meet you!';
+
+    constructor(name, friends) {
+        super(name, friends);
+    }
+}
+
+const dog = new Dog('Ivan', 'male',  ['Ira']);
+const cat = new Cat('Pushok', 'male',  ['Sharik', 'Ponchik']);
+const catWoman = new Cat('Murka', 'female',  ['Pushok']);
+const man = new Man('Andre', ['Vasya', 'Mitya']);
+const woman = new Woman('Natali', ['Madona']);
 
 const inhabitants = [dog, cat, catWoman, man, woman];
 
-let output = inhabitants.map(elem => {
-    return `${elem.saying} I'm a ${elem.species} with the name ${elem.name}, which means I'm ${elem.gender}. My body has ${elem.legs} legs and ${elem.hands} hands. And I want to say hi to <b>${elem.friends}</b>, you are the best!`
-}).join('\n\n');
-
-print(output);
+inhabitants.forEach(inhabitant => print(inhabitant.sayHi()));
 
 // ======== OUTPUT ========
 /* Use print(message) for output.
